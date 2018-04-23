@@ -1,3 +1,60 @@
+* {
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+}
+
+html {
+   height: 100%;
+   --p-color: #fff354;
+   --s-color: #54ff65;
+}
+
 body {
-    text-align: center;
+   text-align: center;
+   font-family: 'Shadows Into Light', cursive;
+   font-size: 16px;
+   background-image: url("../images/rainbow.svg");
+   background-position: center;
+   background-size: cover;
+   background-repeat: no-repeat;
+   height: 100%;
+}
+
+h1 {
+   color: pink;
+   font-size: 4rem;
+   color: var(--p-color);
+}
+
+#score-container {
+   position: absolute;
+   left: 0;
+   bottom: 0;
+}
+
+p {
+   font-size: 2rem;
+   color: var(--s-color);
+}
+
+#wrapper {
+   width: 707px;
+   height: 150px;
+   transform: translateY(35px);
+   margin: 0 auto;
+   position: relative;
+}
+
+#heart-container {
+   position: absolute;
+   bottom: 0;
+   right: 0;
+}
+
+i {
+   color: #ff005c;
+   font-size: 2rem;
+   margin-left: 5px;
+
 }
