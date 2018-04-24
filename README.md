@@ -1,6 +1,11 @@
-frontend-nanodegree-arcade-game
-===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+Welcome to my arcade game - Project 4 from the Udacity front-end nano-degree program.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+1. The objective of the game is to cross the road and avoid the bugs.
+2. Use the arrow keys on the keyboard to move.
+3. Every 5000 points a new enemy is added to the canvas board.
+4. A key is dropped on the board at 25,000 points.
+5. You must have the key with you to complete the game.
+6. Once you have achieved 30,000 points you can go for your last run to finish the game.
+
+GOOD LUCK. 

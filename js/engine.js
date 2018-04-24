@@ -1,5 +1,12 @@
 /* jshint esversion: 6 */
 
+
+// *****************************************
+// THIS CODE WAS GIVE AS PART OF THE PROJECT
+// I HAVE NO PERFORMED ANY OF THIS CODE
+// *****************************************
+
+
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
  * draws the initial game board on the screen, and then calls the update and
@@ -176,7 +183,6 @@ const Engine = (function(global) {
     */
    Resources.load([
       'images/stone-block.png',
-      'images/water-block.png',
       'images/grass-block.png',
       'images/enemy-bug.png',
       'images/char-horn-girl.png',

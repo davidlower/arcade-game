@@ -9,6 +9,8 @@ html {
    --p-color: #fff354;
    --s-color: #54ff65;
    --t-color: #ff42b4;
+   --v-color: #6a82ff;
+   --w-color: #08deb7;
    --font: 'Shadows Into Light', cursive;
    font-family: var(--font);
 }
@@ -27,21 +29,17 @@ h1 {
    font-size: 4rem;
    color: var(--p-color);
    margin-bottom: 10px;
-   text-transform: uppercase;
 }
 
 h2 {
    font-size: 3.6rem;
-   color: var(--t-color);
+   margin-bottom: 15px;
 }
 
 #score-container {
    position: absolute;
    left: 0;
    bottom: 0;
-}
-
-#score {
    font-size: 2rem;
    color: var(--s-color);
 }
@@ -58,16 +56,32 @@ h2 {
    position: absolute;
    bottom: 0;
    right: 0;
+   color: #ff005c;
+}
+
+#key-container {
+   position: absolute;
+   bottom: 0;
+   right: 130px;
+   color: #fbff20;
 }
 
 i {
-   color: #ff005c;
    font-size: 2rem;
    margin-left: 5px;
-
 }
 
-#gameOver {
+/* MODALS FOR GAMEOVER, GAMECOMPLETE AND INTRODUCTION */
+
+.modal-container {
+   width: 90%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+
+#gameOver, #gameComplete, #startModal {
    height: 707px;
    width: 707px;
    background-color: white;
@@ -77,37 +91,34 @@ i {
    display: none;
 }
 
-#cross {
-   position: absolute;
-   top: 15px;
-   right: 15px;
+#startModal {
+   color: var(--w-color);
+}
+
+#gameOver {
    color: var(--t-color);
 }
 
-#cross:active {
-   transform: rotate(-45deg);
+#gameComplete {
+   color: var(--v-color);
 }
 
-.modal-container {
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -55%);
+.small-text {
+   font-size: 1.6rem;
 }
 
-.modal-text {
-   color: var(--t-color);
+#gameOver p {
    margin: 0 0 35px 0;
    font-size: 2rem;
    line-height: 3rem;
 }
 
 img {
-   width: 150px;
-   height: 150px;
+   width: 120px;
+   height: 120px;
 }
 
-#btn {
+#btn1, #btn2 {
    color: white;
    background-color: var(--t-color);
    padding: 15px 50px;
@@ -119,11 +130,26 @@ img {
    box-shadow: 1px 1px 3px #d0c4d2;
 }
 
-#btn:active {
+#btn1 {
+   margin-top: 30px;
+   background-color: var(--w-color);
+}
+
+#btn1:active, #btn2:active {
    box-shadow: 0 0 0 #d0c4d2;
    transform: translate(1px, 1px);
 }
 
-#btn, #cross {
+#cross1, #cross2, #cross3 {
+   position: absolute;
+   top: 15px;
+   right: 15px;
+}
+
+#cross1:active, #cross2:active, #cross3:active {
+   transform: rotate(-45deg);
+}
+
+#btn1, #btn2, #cross1, #cross2, #cross3 {
    cursor: pointer;
 }
