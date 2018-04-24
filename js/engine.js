@@ -160,6 +160,7 @@ const Engine = (function(global) {
          enemy.render();
       });
       player.render();
+      key.render();
    }
 
    /* This function does nothing but it could have been a good place to
@@ -179,7 +180,7 @@ const Engine = (function(global) {
       'images/grass-block.png',
       'images/enemy-bug.png',
       'images/char-horn-girl.png',
-      'images/Heart.png'
+      'images/Key.png'
    ]);
    Resources.onReady(init);
    /* Assign the canvas' context object to the global variable (the window

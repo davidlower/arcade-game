@@ -8,11 +8,13 @@ html {
    height: 100%;
    --p-color: #fff354;
    --s-color: #54ff65;
+   --t-color: #ff42b4;
+   --font: 'Shadows Into Light', cursive;
+   font-family: var(--font);
 }
 
 body {
    text-align: center;
-   font-family: 'Shadows Into Light', cursive;
    font-size: 16px;
    background-image: url("../images/rainbow.svg");
    background-position: center;
@@ -22,9 +24,15 @@ body {
 }
 
 h1 {
-   color: pink;
    font-size: 4rem;
    color: var(--p-color);
+   margin-bottom: 10px;
+   text-transform: uppercase;
+}
+
+h2 {
+   font-size: 3.6rem;
+   color: var(--t-color);
 }
 
 #score-container {
@@ -33,7 +41,7 @@ h1 {
    bottom: 0;
 }
 
-p {
+#score {
    font-size: 2rem;
    color: var(--s-color);
 }
@@ -57,4 +65,65 @@ i {
    font-size: 2rem;
    margin-left: 5px;
 
+}
+
+#gameOver {
+   height: 707px;
+   width: 707px;
+   background-color: white;
+   border-radius: 10px;
+   z-index: 5;
+   position: relative;
+   display: none;
+}
+
+#cross {
+   position: absolute;
+   top: 15px;
+   right: 15px;
+   color: var(--t-color);
+}
+
+#cross:active {
+   transform: rotate(-45deg);
+}
+
+.modal-container {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -55%);
+}
+
+.modal-text {
+   color: var(--t-color);
+   margin: 0 0 35px 0;
+   font-size: 2rem;
+   line-height: 3rem;
+}
+
+img {
+   width: 150px;
+   height: 150px;
+}
+
+#btn {
+   color: white;
+   background-color: var(--t-color);
+   padding: 15px 50px;
+   border-radius: 10px;
+   outline: none;
+   border: none;
+   font-family: var(--font);
+   font-size: 1.4rem;
+   box-shadow: 1px 1px 3px #d0c4d2;
+}
+
+#btn:active {
+   box-shadow: 0 0 0 #d0c4d2;
+   transform: translate(1px, 1px);
+}
+
+#btn, #cross {
+   cursor: pointer;
 }

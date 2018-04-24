@@ -16,7 +16,16 @@
    <div id="wrapper">
       <h1>Arcade Game</h1>
       <div id="score-container">
-         <p>Score: 500</p>
+         <p id="score">Score: 500</p>
+      </div>
+      <div id="gameOver">
+         <i id="cross" class="fas fa-times"></i>
+         <div class="modal-container">
+            <h2>Game Over</h2>
+            <img src="images/crying.svg" alt="">
+            <p class="modal-text">Oh dear... <br> that didn't go to well!</p>
+            <button id="btn" type="button" name="button">Try Again</button>
+         </div>
       </div>
       <div id="heart-container">
          <!-- <i class="fas fa-heart"></i>

@@ -2,11 +2,14 @@
 
 
 // GLOBAL VARS
-let lives = 3;
+let score = 0;
 const fullHeart = '<i class="fas fa-heart"></i>';
 const emptyHeart = '<i class="far fa-heart"></i>';
-const live = document.getElementById("heart-container");
-live.innerHTML = fullHeart + fullHeart + fullHeart; // LOADING 3 HEARTS FOR THE GAME START
+const liveID = document.getElementById("heart-container");
+const scoreID = document.getElementById("score");
+
+liveID.innerHTML = fullHeart + fullHeart + fullHeart; // LOADING 3 HEARTS FOR THE GAME START
+scoreID.innerHTML = "Score: " + score; // LOADING SCORE FOR THE GAME START
 
 
 // ***************
@@ -14,6 +17,8 @@ live.innerHTML = fullHeart + fullHeart + fullHeart; // LOADING 3 HEARTS FOR THE 
 const Player = function(x, y) { // PLAYER OBJECT
    this.x = x;
    this.y = y;
+   this.lives = 3;
+   this.gameOverFlag = false; // INDICATES IF GAME OVER IS PRESENT
    this.sprite = 'images/char-horn-girl.png';
 };
 
@@ -24,7 +29,32 @@ Player.prototype.render = function() { // PUTTING PLAYER ON CANVAS
 };
 
 Player.prototype.update = function() { // REFRESHES PLAYER FRAMERATE
+   if (this.y < 0) {
+      setTimeout(() => {
+         this.x = 304;
+         this.y = 466;
+      }, 700);
+      score += 100;
+      scoreID.innerHTML = "Score: " + score;
+   }
+   if (score == 5000) {
+      allEnemies.push(enemy5);
+      key.x = 106;
+      key.y = 45;
+      randomNum = 3.5;
+   }
+   if (score == 10000) {
+      allEnemies.push(enemy6);
+   }
+   if (score == 15000) {
+      allEnemies.push(enemy7);
+   }
+   if (score == 20000) {
+      allEnemies.push(enemy8);
+   }
+   if (score == 25000) {
 
+   }
 };
 
 // **********************
@@ -32,17 +62,19 @@ Player.prototype.update = function() { // REFRESHES PLAYER FRAMERATE
 Player.prototype.handleInput = function(allowedKeys) {
    let tileHeight = 83; // HEIGHT OF EACH ROW
    let tileWidth = 101; // WIDTH OF EACH COLUMN
-   if (allowedKeys === 'up' && this.y > 1) { // && USED TO PREVENT PLAYER LEAVING CANVAS
-      this.y -= tileHeight;
-   }
-   if (allowedKeys === 'down' && this.y < 403) {
-      this.y += tileHeight;
-   }
-   if (allowedKeys === 'left' && this.x > 1) {
-      this.x -= tileWidth;
-   }
-   if (allowedKeys === 'right' && this.x < 580) {
-      this.x += tileWidth;
+   if (player.gameOverFlag === false) { // CONDITION TO PREVENT KEYSTROKES DURING GAMEOVER
+      if (allowedKeys === 'up' && this.y > 1) { // && USED TO PREVENT PLAYER LEAVING CANVAS
+         this.y -= tileHeight;
+      }
+      if (allowedKeys === 'down' && this.y < 403) {
+         this.y += tileHeight;
+      }
+      if (allowedKeys === 'left' && this.x > 1) {
+         this.x -= tileWidth;
+      }
+      if (allowedKeys === 'right' && this.x < 580) {
+         this.x += tileWidth;
+      }
    }
 };
 document.addEventListener('keyup', function(e) {
@@ -65,11 +97,17 @@ const Enemy = function(x, y, speed) { // ENEMY OJBECT
    this.sprite = 'images/enemy-bug.png';
 };
 
-const enemy1 = new Enemy(1, 55, 400); // NEW ENEMIES
-const enemy2 = new Enemy(101, 138, 300);
-const enemy3 = new Enemy(150, 221, 200);
-const enemy4 = new Enemy(150, 304, 100);
-const allEnemies = [enemy1, enemy2, enemy3, enemy4];
+randomNum = 1.1;
+const enemy1 = new Enemy(1, 55, (randomNum * 325)); // NEW ENEMIES
+const enemy5 = new Enemy(1, 138, (randomNum * 350));
+const enemy2 = new Enemy(101, 138, (randomNum * 300));
+const enemy6 = new Enemy(101, 221, (randomNum * 375));
+const enemy3 = new Enemy(150, 221, (randomNum * 200));
+const enemy7 = new Enemy(150, 304, (randomNum * 400));
+const enemy4 = new Enemy(150, 304, (randomNum * 100));
+const enemy8 = new Enemy(150, 55, (randomNum * 425));
+let allEnemies = [enemy1, enemy2, enemy3, enemy4];
+
 
 Enemy.prototype.update = function(dt) {
    this.x += this.speed * dt; // USING dt VALUE KEEPS CONSISTENCY OF SPEED FOR ALL ENEMIES
@@ -80,147 +118,72 @@ Enemy.prototype.update = function(dt) {
    if (player.x < this.x + 70 && player.x + 60 > this.x && player.y < this.y + 40 && 40 + player.y > this.y) {
       player.x = 304; // STARTING LOCATION AFTER COLLISION OCCURS
       player.y = 466;
-      lives--;
+      player.lives--;
    }
    // WHEN KILLED YOU LOOSE A LIFE AND EVENTUALLY TRIGGER GAME OVER
-   if (lives == 2) {
-      live.innerHTML = fullHeart + fullHeart + emptyHeart;
+   if (player.lives == 2) {
+      liveID.innerHTML = fullHeart + fullHeart + emptyHeart;
    }
-   if (lives == 1) {
-      live.innerHTML = fullHeart + emptyHeart + emptyHeart;
+   if (player.lives == 1) {
+      liveID.innerHTML = fullHeart + emptyHeart + emptyHeart;
    }
-   if (lives == 0) {
-      live.innerHTML = emptyHeart + emptyHeart + emptyHeart; // 3 EMPTY HEARTS - GAME OVER
-      // gameOver();
+   if (player.lives == 0) {
+      liveID.innerHTML = emptyHeart + emptyHeart + emptyHeart; // 3 EMPTY HEARTS - GAME OVER
+      gameOver(); // CALLS THE GAME OVER POPUP MODAL
+      liveID.innerHTML = fullHeart + fullHeart + fullHeart; // RESTORES 3 LIVES AGAIN
    }
-
 };
 
 Enemy.prototype.render = function() {
-   ctx.drawImage(Resources.get(this.sprite), this.x, this.y); // PUTS THE ENEMY ON THE CANVAS
+   ctx.drawImage(Resources.get(this.sprite), this.x, this.y); // PUTS THE ENEMIES ON THE CANVAS
 };
 
-function gameOver() {
+let modal = document.getElementById("gameOver");
 
+function gameOver() {
+   player.gameOverFlag = true; // THIS TOGGLES GAMEOVER SO PLAYER CAN'T MOVE
+   modal.style.display = "block";
+   player.lives = 3; // RESETS LIVES
+   score = 0;
+   scoreID.innerHTML = "Score: " + score; // RESETS SCORE
+   allEnemies = [enemy1, enemy2, enemy3, enemy4]; // RESETS ENEMIES
 }
 
-// Heart.prototype.update = function() {};
-// *******************************************************************
-// *******************************************************************
-// *******************************************************************
+document.getElementById("btn").addEventListener("click", closeModal);
+document.getElementById("cross").addEventListener("click", closeModal);
 
-// // Enemies our player must avoid. Passed x and y arguments
-// var Enemy = function(x, y, velocity) {
-//    // Variables applied to each of our instances go here,
-//    // we've provided one for you to get started
-//
-//    // The image/sprite for our enemies, this uses
-//    // a helper we've provided to easily load images
-//    this.x = x;
-//    this.y = y;
-//    this.velocity = getRandomInt(80, 250);
-//    this.sprite = 'images/enemy-bug.png';
-// };
-//
-// // Update the enemy's position, required method for game
-// // Parameter: dt, a time delta between ticks
-// Enemy.prototype.update = function(dt) {
-//    // You should multiply any movement by the dt parameter
-//    // which will ensure the game runs at the same speed for
-//    // all computers.
-//    this.x += this.velocity * dt;
-//    if (this.x > 550) {
-//       this.x = -150;
-//    }
-//    // Collision Detection: Using .abs to get absolute number otherwise it won't work
+function closeModal() {
+   player.gameOverFlag = false;
+   modal.style.display = "none";
+}
+
+const Key = function(x, y) {
+   this.x = x;
+   this.y = y;
+   this.score = score;
+   this.sprite = 'images/Key.png';
+};
+
+var key = new Key(); // 106 or 2 / 45 is the second value
+
+Key.prototype.render = function() {
+   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Key.prototype.update = function() {
+   if (player.x < this.x + 70 && player.x + 60 > this.x && player.y < this.y + 40 && 40 + player.y > this.y) {
+      this.x = 4000; // STARTING LOCATION AFTER COLLISION OCCURS
+      this.y = 4000;
+      this.score++;
+      console.log(this.score);
+   }
+};
+
+
+// Collision Detection: Using .abs to get absolute number otherwise it won't work
 //    if (Math.abs(this.x - player.x) < 75 &&
 //       Math.abs(this.y - player.y) < 78) {
 //       player.x = 202;
 //       player.y = 405;
 //       player.lives -= 1;
 //    }
-//
-// };
-//
-// // Draw the enemy on the screen, required method for game
-// Enemy.prototype.render = function() {
-//    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-// };
-//
-// // Player class. Passed x and y arguments
-// // This class requires an update(), render() and
-// // a handleInput() method.
-//
-// const Player = function(x, y) {
-//    this.score = 0;
-//    this.lives = 3;
-//    this.x = x;
-//    this.y = y;
-//    this.sprite = 'images/char-horn-girl.png';
-//    this.gameOver = false;
-//    this.pauseKey = false;
-// };
-//
-// // Condition used to stop random key strokes
-// Player.prototype.update = function() {
-//    //Return the player back once they hit water: With delay
-//    if (this.y < 0) {
-//       this.pauseKey = true; //stop keyboard
-//       //this makes sure player does not dance randomly
-//       setTimeout(() => {
-//          this.pauseKey = false;
-//       }, 1000);
-//       //this is the actual functionality
-//       setTimeout(() => {
-//          this.x = 202;
-//          this.y = 405;
-//          console.log("time!");
-//       }, 500);
-//    }
-// };
-//
-// //Draw the player
-// Player.prototype.render = function() {
-//    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-// };
-//
-// Player.prototype.handleInput = function(key) {
-//    //conditions to start/stop the keystroke
-//    this.lives === 0 ? this.gameOver = true : this.gameOver = false;
-//    if (player.gameOver || player.pauseKey) return;
-//    switch (key) {
-//       case 'up':
-//          this.y -= 85;
-//          break;
-//       case 'down':
-//          this.y += 85;
-//          break;
-//       case 'left':
-//          this.x -= 100;
-//          break;
-//       case 'right':
-//          this.x += 100;
-//          break;
-//    };
-//    //These conditions are required so player stays in canvas
-//    if (this.x <= 2) this.x = 2;
-//    if (this.x >= 400) this.x = 400;
-//    if (this.y >= 405 || this.y <= -85) this.y = 405;
-//    if (this.y < 0) player.score += 1;
-// }
-//
-// // Now instantiate your objects.
-// // Place all enemy objects in an array called allEnemies
-// const allEnemies = [
-//    enemy1 = new Enemy(60, 60),
-//    enemy2 = new Enemy(150, 145),
-//    enemy3 = new Enemy(300, 230)
-// ];
-
-
-// // This returns a random integer between the specified values (from MDN)
-// function getRandomInt(min, max) {
-//    min = Math.ceil(min);
-//    max = Math.floor(max);
-//    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-// }
