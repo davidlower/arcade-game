@@ -1,7 +1,8 @@
 * {
+   -webkit-box-sizing: border-box;
    box-sizing: border-box;
-   padding: 0;
    margin: 0;
+   padding: 0;
 }
 
 html {
@@ -12,83 +13,104 @@ html {
    --v-color: #6a82ff;
    --w-color: #08deb7;
    --font: 'Shadows Into Light', cursive;
+
    font-family: var(--font);
 }
 
 body {
+   height: 100%;
+
    text-align: center;
-   font-size: 16px;
+
    background-image: url("../images/rainbow.svg");
+   background-repeat: no-repeat;
    background-position: center;
    background-size: cover;
-   background-repeat: no-repeat;
-   height: 100%;
+
+   font-size: 16px;
 }
 
 h1 {
-   font-size: 4rem;
-   color: var(--p-color);
    margin-bottom: 10px;
+
+   color: var(--p-color);
+
+   font-size: 4rem;
 }
 
 h2 {
-   font-size: 3.6rem;
    margin-bottom: 15px;
+
+   font-size: 3.6rem;
 }
 
 #score-container {
    position: absolute;
-   left: 0;
    bottom: 0;
-   font-size: 2rem;
+   left: 0;
+
    color: var(--s-color);
+
+   font-size: 2rem;
 }
 
 #wrapper {
+   position: relative;
+
    width: 707px;
    height: 150px;
-   transform: translateY(35px);
    margin: 0 auto;
-   position: relative;
+
+   -webkit-transform: translateY(35px);
+   transform: translateY(35px);
 }
 
 #heart-container {
    position: absolute;
-   bottom: 0;
    right: 0;
+   bottom: 0;
+
    color: #ff005c;
 }
 
 #key-container {
    position: absolute;
-   bottom: 0;
    right: 130px;
+   bottom: 0;
+
    color: #fbff20;
 }
 
 i {
-   font-size: 2rem;
    margin-left: 5px;
+
+   font-size: 2rem;
 }
 
 /* MODALS FOR GAMEOVER, GAMECOMPLETE AND INTRODUCTION */
 
 .modal-container {
-   width: 90%;
    position: absolute;
    top: 50%;
    left: 50%;
+
+   width: 90%;
+
+   -webkit-transform: translate(-50%, -50%);
    transform: translate(-50%, -50%);
 }
 
 #gameOver, #gameComplete, #startModal {
-   height: 707px;
-   width: 707px;
-   background-color: white;
-   border-radius: 10px;
-   z-index: 5;
    position: relative;
+   z-index: 5;
+
    display: none;
+
+   width: 707px;
+   height: 707px;
+
+   border-radius: 10px;
+   background-color: white;
 }
 
 #startModal {
@@ -109,6 +131,7 @@ i {
 
 #gameOver p {
    margin: 0 0 35px 0;
+
    font-size: 2rem;
    line-height: 3rem;
 }
@@ -119,25 +142,32 @@ img {
 }
 
 #btn1, #btn2 {
-   color: white;
-   background-color: var(--t-color);
    padding: 15px 50px;
+
+   color: white;
+   border: none;
    border-radius: 10px;
    outline: none;
-   border: none;
+   background-color: var(--t-color);
+   -webkit-box-shadow: 1px 1px 3px #d0c4d2;
+   box-shadow: 1px 1px 3px #d0c4d2;
+
    font-family: var(--font);
    font-size: 1.4rem;
-   box-shadow: 1px 1px 3px #d0c4d2;
 }
 
 #btn1 {
    margin-top: 30px;
+
    background-color: var(--w-color);
 }
 
 #btn1:active, #btn2:active {
-   box-shadow: 0 0 0 #d0c4d2;
+   -webkit-transform: translate(1px, 1px);
    transform: translate(1px, 1px);
+
+   -webkit-box-shadow: 0 0 0 #d0c4d2;
+   box-shadow: 0 0 0 #d0c4d2;
 }
 
 #cross1, #cross2, #cross3 {
@@ -147,6 +177,7 @@ img {
 }
 
 #cross1:active, #cross2:active, #cross3:active {
+   -webkit-transform: rotate(-45deg);
    transform: rotate(-45deg);
 }
 
