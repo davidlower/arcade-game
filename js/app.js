@@ -1,6 +1,5 @@
 /* jshint esversion: 6 */
 
-
 // GLOBAL VARS
 let score = 0;
 let modal = document.getElementById("gameOver");
