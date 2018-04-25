@@ -82,7 +82,7 @@ Player.prototype.handleInput = function(allowedKeys) {
       }
    }
 };
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', (e) => {
    let allowedKeys = {
       37: 'left',
       38: 'up',
@@ -102,7 +102,7 @@ const Enemy = function(x, y, speed) { // ENEMY OJBECT
    this.sprite = 'images/enemy-bug.png';
 };
 
-randomNum = 1.1;
+randomNum = 1.1; // RANDOM NUMBER CONTROL. GIVES ME OPTION TO QUICKLY CHANGE SPEED OF ENEMIES
 const enemy1 = new Enemy(1, 55, (randomNum * 325)); // NEW ENEMIES
 const enemy2 = new Enemy(101, 138, (randomNum * 300));
 const enemy3 = new Enemy(150, 221, (randomNum * 200));
