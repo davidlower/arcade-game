@@ -15,22 +15,26 @@ startModal.style.display = "block"; // OPENS THE INTRODUCTION MODAL ON BROWSER R
 liveID.innerHTML = fullHeart + fullHeart + fullHeart; // LOADING 3 HEARTS FOR THE GAME START
 scoreID.innerHTML = "Score: " + score; // LOADING SCORE FOR THE GAME START
 
+class GameObject { // MASTER OBJECT CREATED TO CREATE SUBCLASSES FOR GAME OBJECTS
+   constructor(x, y) {
+      this.x = x;
+      this.y = y;
+   }
+   render() {
+      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+   }
+}
 
-// ***************
-// PLAYER CREATION
-const Player = function(x, y) { // PLAYER OBJECT
-   this.x = x;
-   this.y = y;
-   this.lives = 3;
-   this.gameOverFlag = false; // INDICATES IF GAME OVER IS PRESENT
-   this.sprite = 'images/char-horn-girl.png';
-};
+class Player extends GameObject { // PLAYER OBJECT CREATED
+   constructor(x, y) {
+      super(x, y);
+      this.lives = 3;
+      this.gameOverFlag = false; // INDICATES IF GAME OVER IS PRESENT
+      this.sprite = 'images/char-horn-girl.png';
+   }
+}
 
 const player = new Player(304, 466); // ONE PLAYER CREATED
-
-Player.prototype.render = function() { // PUTTING PLAYER ON CANVAS
-   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
 
 Player.prototype.update = function() { // REFRESHES PLAYER FRAMERATE
    if (this.y < 0 && key.score == 1 && score > 30000) {
@@ -66,7 +70,7 @@ Player.prototype.update = function() { // REFRESHES PLAYER FRAMERATE
 Player.prototype.handleInput = function(allowedKeys) {
    let tileHeight = 83; // HEIGHT OF EACH ROW
    let tileWidth = 101; // WIDTH OF EACH COLUMN
-   if (player.gameOverFlag === false) { // CONDITION TO PREVENT KEYSTROKES DURING GAMEOVER
+   if (this.gameOverFlag === false) { // CONDITION TO PREVENT KEYSTROKES DURING GAMEOVER
       if (allowedKeys === 'up' && this.y > 1) { // && USED TO PREVENT PLAYER LEAVING CANVAS
          this.y -= tileHeight;
       }
@@ -94,12 +98,13 @@ document.addEventListener('keyup', (e) => {
 
 // ***************
 // ENEMY CREATION
-const Enemy = function(x, y, speed) { // ENEMY OJBECT
-   this.x = x;
-   this.y = y;
-   this.speed = speed;
-   this.sprite = 'images/enemy-bug.png';
-};
+class Enemy extends GameObject { // ENEMY OJBECT
+   constructor(x, y, speed) {
+      super(x, y);
+      this.speed = speed;
+      this.sprite = 'images/enemy-bug.png';
+   }
+}
 
 randomNum = 1.1; // RANDOM NUMBER CONTROL. GIVES ME OPTION TO QUICKLY CHANGE SPEED OF ENEMIES
 const enemy1 = new Enemy(1, 55, (randomNum * 325)); // NEW ENEMIES
@@ -135,9 +140,35 @@ Enemy.prototype.update = function(dt) {
    }
 };
 
-Enemy.prototype.render = function() {
-   ctx.drawImage(Resources.get(this.sprite), this.x, this.y); // PUTS THE ENEMIES ON THE CANVAS
+
+// ***************
+// KEY CREATION
+class Key extends GameObject { // KEY OBJECT CREATION
+   constructor(x, y) {
+      super(x, y);
+      this.sprite = 'images/Key.png';
+   }
+}
+
+let key = new Key(); // KEY CREATION
+
+Key.prototype.update = function() {
+   if (dist(this.x, this.y, player.x, player.y) <= 40) { // CALLING DIST FX
+      this.x = 1000; // TAKING KEY OFF CANVAS
+      this.y = 1000;
+      this.score = 1; // ADDING TO KEYSCORE INDICATING PLAYER HAS THE KEY
+      keyID.innerHTML = '<i class="fas fa-key"></i>'; // ADDING KEY TO INVENTORY
+   }
 };
+
+// FIND THE LENGTH BETWEEN THE KEY AND PLAYER for COLLISION
+function dist(x1, y1, x2, y2) {
+   let lengthOfX = x2 - x1;
+   let lengthOfY = y2 - y1;
+   return Math.sqrt(Math.pow(lengthOfX, 2) + Math.pow(lengthOfY, 2)); // PYTHAGORAS THEOREM
+}
+
+let allEnemies = [enemy1, enemy2, enemy3, enemy4, key];
 
 
 function gameOver() {
@@ -176,36 +207,3 @@ function closeModal() {
    modal1.style.display = "none";
    startModal.style.display = "none";
 }
-
-
-// ***************
-// KEY CREATION
-const Key = function(x, y) { // KEY OBJECT CREATION
-   this.x = x;
-   this.y = y;
-   this.score = score;
-   this.sprite = 'images/Key.png';
-};
-
-let key = new Key(); // KEY CREATION
-
-Key.prototype.render = function() { // PUTTING KEY ONTO CANVAS
-   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-Key.prototype.update = function() {
-   if (dist(this.x, this.y, player.x, player.y) <= 40) { // CALLING DIST FX
-      this.x = 1000; // TAKING KEY OFF CANVAS
-      this.y = 1000;
-      this.score = 1; // ADDING TO KEYSCORE INDICATING PLAYER HAS THE KEY
-      keyID.innerHTML = '<i class="fas fa-key"></i>'; // ADDING KEY TO INVENTORY
-   }
-};
-// FIND THE LENGTH BETWEEN THE KEY AND PLAYER for COLLISION
-function dist(x1, y1, x2, y2) {
-   let lengthOfX = x2 - x1;
-   let lengthOfY = y2 - y1;
-   return Math.sqrt(Math.pow(lengthOfX, 2) + Math.pow(lengthOfY, 2)); // PYTHAGORAS THEOREM
-}
-
-let allEnemies = [enemy1, enemy2, enemy3, enemy4, key];
