@@ -6,6 +6,12 @@ Project 4 from the Udacity front-end nano-degree program.
 The game can be found here:
 https://davidlower.github.io/arcade-game/
 
+Or
+
+You can download the files from here https://github.com/davidlower/arcade-game.
+Use the green download button. Open the zip file and copy/drag the index.html file into any internet browser. 
+
+
 Game rules:
 1. The objective of the game is to cross the road and avoid the bugs.
 2. Use the arrow keys on the keyboard to move.
